@@ -1,0 +1,33 @@
+{
+  "name": "node-stripe",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt": "*",
+    "body-parser": "^1.19.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "*",
+    "date-and-time": "*",
+    "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-session": "*",
+    "form-data": "*",
+    "method-override": "*",
+    "mongodb": "^4.2.1",
+    "mongoose": "^5.11.15",
+    "monk": "*",
+    "morgan": "*",
+    "node-uuid": "*",
+    "nodemon": "^2.0.19",
+    "nunjucks": "*",
+    "q": "*",
+    "static-favicon": "*",
+    "stripe": "*",
+    "uuidv4": "*",
+    "validator": "*"
+  }
+}

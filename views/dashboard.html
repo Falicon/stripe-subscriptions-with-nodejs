@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block middle_content %}
+
+  <!-- SUBSCRIPTION STATUS !-->
+  <strong>SUBSCRIPTION STATUS</strong>
+
+  {% if account['subscription']['status'] == 'trial' %}
+    <p>You are currently in a trial period.</p>
+    <p>Your subscription is set to automatically activate at the end of your trial period.</p>
+
+  {% elif account['subscription']['status'] != 'active' %}
+    <p>You do not have an active subscription at this moment. You should <a href="/subscribe">subscribe</a>.</p>
+    <p><center><a href="/subscribe">SUBSCRIBE NOW!</a></center></p>
+
+  {% else %}
+    <p>You have an active subscription.</p>
+
+  {% endif %}
+
+  <!-- stripe manage billing button !-->
+  <form action="/create-portal-session" method="POST">
+    <button type="submit">Manage your subscription</button>
+  </form>
+
+{% endblock %}

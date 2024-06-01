@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block middle_content %}
+
+  {{message}}
+
+{% endblock %}
