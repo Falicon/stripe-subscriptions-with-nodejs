@@ -1,47 +1,77 @@
 {% extends 'base.html' %}
 
 {% block middle_content %}
-  {% if error.trim() != '' %}
-    {{error}}
-    <br /><br />
-  {% endif %}
+  <div class="w-full text-center text-xl font-bold py-6">Subscriptions with Stripe Example Code</div>
 
-  <h2>Sign In</h2>
+  <div class="grid grid-cols-2 gap-4 px-4">
+    <!-- SIGN UP !-->
+    <div class="my-6">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <h2 class="text-2xl font-bold leading-9 tracking-tight text-gray-900">Create Account</h2>
+      </div>
+      <div class="border border-slate-200 overflow-hidden rounded-lg mt-8">
+        {% if error.trim() != '' %}
+          <div class="p-4 lg:p-6 text-slate-500">
+            <p class="font-bold">Sorry!</p>
+            <p>{{erro}}</p>
+          </div>
+        {% endif %}
+        <form class="p-4 lg:p-6 space-y-4 max-w-lg" action="/create/account" id="sign_up" method="post">
+          <div>
+            <label for="real_name" class="block text-sm font-medium leading-6 text-slate-500">Full Name</label>
+            <input type="text" name="real_name" id="real_name" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" placeholder="Kevin Marshall" />
+          </div>
 
-  <form method="post" action="/sign/in">
-    Username<br />
-    <input name="username" type="text" />
-    <br /><br />
+          <div>
+            <label for="username" class="block text-sm font-medium leading-6 text-slate-500">Username</label>
+            <input type="text" name="username" placeholder="Choose a username" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" />
+          </div>
 
-    Password<br />
-    <input name="password" type="password" />
-    <br /><br />
+          <div>
+            <label for="password" class="block text-sm font-medium leading-6 text-slate-500">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••••" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" />
+          </div>
 
-    <input type="submit" value="Sign In" />
-  </form>
+          <div>
+            <label for="confirm_password" class="block text-sm font-medium leading-6 text-slate-500">Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••••" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" />
+          </div>
 
-  <br /><br />
+          <div class="grid grid-cols-2">
+            <button type="submit" class="rounded-md bg-yellow-200 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-yellow-100 block text-center ring-1 ring-yellow-400 whitespace-nowrap cursor-pointer">Create Your Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
-  <h2>Create Account</h2>
+    <!-- SIGN IN !-->
+    <div class="my-6">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <h2 class="text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign In</h2>
+      </div>
+      <div class="border border-slate-200 overflow-hidden rounded-lg mt-8">
+        <!-- Sign In Form !-->
+        <form action="/sign/in" method="post" class="p-4 lg:p-6 max-w-lg">
+          <input type="hidden" name="bounce_to" value="{{bounce_to}}" />
+          <div class="space-y-4">
+            <div>
+              <label for="username" class="block text-sm font-medium leading-6 text-slate-500">Username or Email Address</label>
+              <input type="text" name="username" id="username" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" placeholder="you@example.com" required="" />
+            </div>
 
-  <form method="post" action="/create/account" id="create_account">
-    Full Name<br />
-    <input type="text" name="real_name" />
-    <br /><br />
+            <div>
+              <label for="password" class="block text-sm font-medium leading-6 text-slate-500">Password</label>
+              <input type="password" name="password" id="password" placeholder="••••••••••" class="block w-full rounded-md border-0 py-1.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 sm:text-sm sm:leading-6" required="" />
+            </div>
 
-    Username<br />
-    <input type="username" name="username" value="" />
-    <br /><br />
+            <div class="grid grid-cols-2">
+              <button type="submit" class="rounded-md bg-yellow-200 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-yellow-100 ring-1 ring-yellow-400 block text-center whitespace-nowrap cursor-pointer">Sign In</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
 
-    Password<br />
-    <input type="password" name="password" id="password" />
-    <br /><br />
-
-    Confirm Password<br />
-    <input type="password" name="confirm_password" id="confirm_password" />
-    <br /><br />
-
-    <input type="submit" value="Create Your Account" />
-  </form>
+  </div>
 
 {% endblock %}

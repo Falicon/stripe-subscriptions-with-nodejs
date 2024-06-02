@@ -2,9 +2,13 @@
 <html lang="en">
   <head>
     {% block style %}{% endblock %}
+    <link rel="stylesheet" href="/main.dist.css" type="text/css" />
   </head>
   <body>
-    {% block middle_content %}{% endblock %}
+    <main class="">
+      {% block middle_content %}{% endblock %}
+    </main>
+
     {% block javascript %}{% endblock %}
   </body>
 </html>

@@ -54,7 +54,7 @@ app.set('view engine', 'nunjucks');
 
 app.use(logger('dev'))
 app.use(bodyParser.json({type: 'application/json'}))
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(cookieParser())
 app.use(session({secret: settings['cookie_secret'], saveUninitialized: true, resave: true, cookie: { maxAge: 86400000 }}))
 app.use(express.static(path.join(__dirname, 'public')))

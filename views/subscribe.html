@@ -3,44 +3,49 @@
 {% block middle_content %}
 
   {% if msg.trim() !== '' %}
-    <strong>NOTE</strong>
-    <p>{{msg}}</p>
-    <br />
+    <div class="w-full text-center text-xl font-bold py-6">
+      NOTE: {{msg}}
+    </div>
   {% endif %}
 
-  {% if (account !== undefined and account['subscription'] !== undefined and account['subscription']['status'] == 'active') %}
-    <h2>Thank You!</h2>
+  <div class="grid grid-cols-2 gap-4 px-4">
 
-    <p>
-      You currently have an <strong>MONTHLY SUBSCRIPTION</strong> and can configure your service via your <a href="/dashboard">dashboard</a>.
-    </p>
+    {% if (account !== undefined and account['subscription'] !== undefined and account['subscription']['status'] == 'active') %}
+      <div class="mt-6">
+        <div class="py-2 text-xl font-bold">Thank You!</div>
 
-    <form action="/create-portal-session" method="POST">
-      <input type="hidden" id="session-id" name="session_id" value="" />
-      <button id="checkout-and-portal-button" type="submit" class="btn btn-outline-success">Manage your subscription</button>
-    </form>
+        <div class="py-2">
+          You currently have an <span class="font-bold">MONTHLY SUBSCRIPTION</span> and can configure your service via your <a href="/dashboard" class="text-underline">dashboard</a>.
+        </div>
 
-  {% else %}
-    <p><strong>ONE LAST STEP</strong></p>
-    <p>Thanks! You've got a validated account, so the only thing left to do is connect your Stripe account so we can activate your 7 day free trial.</p>
+        <form action="/create-portal-session" method="POST">
+          <input type="hidden" id="session-id" name="session_id" value="" />
+          <button id="checkout-and-portal-button" type="submit" class="btn btn-outline-success">Manage your subscription</button>
+        </form>
+      </div>
+      <div class="my-6">
+      </div>
 
-    <form action="/create-checkout-session" method="POST">
-      <input type="hidden" name="lookup_key" value="basic" />
-      <button type="submit" class="btn btn-outline-success">CONNECT YOUR STRIPE ACCCOUNT</button>
-    </form>
+    {% else %}
+      <div class="mt-6">
+        <div class="text-xl font-bold">ONE LAST STEP</div>
+        <div class="py-2">Thanks!</div>
+        <div class="py-2">You've got a validated account, so the only thing left to do is connect your Stripe account so we can activate your 7 day free trial.</div>
+        <div class="py-2">
+          <a href="/create-checkout-session" class="rounded-md bg-yellow-200 px-3 py-2 text-sm font-semibold text-black shadow-sm hover:bg-yellow-100 block text-center ring-1 ring-yellow-400 whitespace-nowrap cursor-pointer">CONNECT YOUR STRIPE ACCCOUNT</a>
+        </div>
+      </div>
+      <div class="mt-6">
+        <div class="p-4 border rounded-lg">
+          <div class="py-2 text-lg font-bold">WHY DO I NEED TO CONNECT STRIPE?</div>
+          <div class="py-2">We use Stripe to simplify &amp; manage your subscription process.  They are an online payments leader and ensure your payment information is always kept safe &amp; that your subscriptions are drop-dead-simple to manage.</div>
+          <div class="py-2"><span class="font-bold">NOTE:</span> This ensures that, for your safety &amp; peace of mind, we NEVER have direct access to your banking or credit card information!</div>
+          <div class="py-2">Stripe also makes it very simple for you to change your subscription and payment details or to <span class="font-bold">cancel your subscription at any time</span>.</div>
+        </div>
+      </div>
 
-    <br /><br /><br />
+    {% endif %}
 
-    <p><strong>WHY DO I NEED TO CONNECT STRIPE? I THOUGHT YOU OFFERED A FREE TRIAL?</strong></p>
-    <p>By authorizing us with your Stripe account you'll activate a 7 day FREE trial.</p>
-    <br />
-    <p><strong>You will not be charged anything until the 7 day trail is complete.</strong></p>
-    <p>We use Stripe to simplify &amp; manage your subscription process.  They are an online payments leader and ensure your payment information is always kept safe &amp; that your subscriptions are drop-dead-simple to manage.</p>
-    <p><small>NOTE: This ensures that, for your safety &amp; peace of mind, we NEVER have direct access to your banking or credit card information!</small></p>
-    <br />
-    <p>Stripe also makes it very simple for you to change your subscription and payment details or to <strong>cancel your subscription at any time</strong>.</p>
-    <p>In fact if you cancel within the 7 trial day period you will not be charged anything. Your service will end after the trial period. Additionally, anytime you cancel an active subscription your service will remain active through that subscription period (your service will end when the subscription period ends &amp; you will not be billed for future periods).</p>
-
-  {% endif %}
+  </div>
 
 {% endblock %}
