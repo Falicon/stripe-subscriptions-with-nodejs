@@ -2,7 +2,7 @@ This is a basic NodeJS (express framework) project to show the core concepts of 
 
 The basic steps to prepare your local system:
 
-1. Clonde or Download this repo
+1. Clone or Download this repo
 
 2. Move into the folder on your local system and run
 

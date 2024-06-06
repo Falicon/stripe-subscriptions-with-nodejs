@@ -27,13 +27,14 @@ exports.create_account = async function(req, res) {
 
       // get the account record we just created
       let account = await req.accounts_db.get_account_by_username(req.db, username)
-      if (account === null || account === undefined) {
+      if (account == null) {
         res.redirect('/sign/in')
         return
       }
 
       // seems like we crated the account; so let's set the cookie and bounce to the dashboard
       res.cookie('current_user', account['username'], { maxAge: 86400000 })
+      // bounce to dashboard
       res.redirect('/dashboard')
       return
     }
@@ -100,7 +101,7 @@ exports.sign_in = async function(req, res) {
   if (username.trim() != '' && password.trim() != '') {
     // try to find the account by the username
     let account = await req.accounts_db.get_account_by_username(req.db, username)
-    if (account === undefined || account == null) {
+    if (account == null) {
       // username || password not correct
       res.render(
         'homepage.html',
