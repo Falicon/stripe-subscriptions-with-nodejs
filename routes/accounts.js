@@ -163,11 +163,12 @@ exports.stripe_activate_subscription = async function(req, res) {
   if (event_type === 'checkout.session.completed') {
     console.log('CHECKOUT SESSION COMPLETE')
     // payment succeeded; potentially update the stripe_id on an account from object.id to object.subscription
-    let account = await req.accounts_db.get_account_by_stripe_id(req.db, data['object']['id'])
+    let account = await req.accounts_db.get_account_by_stripe_session_id(req.db, data['object']['id'])
     if (account !== undefined && account !== null) {
+      account['subscription']['status'] = 'trial'
       account['subscription']['stripe_customer'] = data['object']['customer']
       account['subscription']['stripe_id'] = data['object']['subscription']
-      req.accounts_db.save_account(req.db, account['username'], account)
+      await req.accounts_db.save_account(req.db, account)
       res.json({'status': 'success'})
       return
     }
@@ -183,9 +184,9 @@ exports.stripe_activate_subscription = async function(req, res) {
     }
 
     let account = await req.accounts_db.get_account_by_stripe_customer(req.db, data['object']['customer'])
-    if (account !== undefined && account !== null) {
+    if (account !== null) {
       account['subscription']['status'] = data['object']['status']
-      req.accounts_db.save_account(req.db, account['username'], account)
+      await req.accounts_db.save_account(req.db, account)
       res.json({'status': 'success'})
       return
     }
@@ -200,7 +201,7 @@ exports.stripe_activate_subscription = async function(req, res) {
     let account = await req.accounts_db.get_account_by_stripe_customer(req.db, data['object']['customer'])
     if (account !== undefined && account !== null) {
       account['subscription']['status'] = 'expired'
-      req.accounts_db.save_account(req.db, account['username'], account)
+      await req.accounts_db.save_account(req.db, account)
       res.json({'status': 'success'})
       return
     }
@@ -211,7 +212,7 @@ exports.stripe_activate_subscription = async function(req, res) {
 
   }
 
-  console.log('IGNORED EVENT: ' + event_type)
+  // console.log('IGNORED EVENT: ' + event_type)
   // not sure what kind of request was made; so just error out
   res.json({'status': 'error'})
 }
@@ -244,9 +245,9 @@ exports.stripe_checkout_session = async function(req, res) {
 
     // update the account with the stripe session
     let account = await req.accounts_db.get_account_by_username(req.db, req.cookies.current_user)
-    if (account !== undefined) {
-      account['subscription']['stripe_id'] = session.id
-      req.accounts_db.save_account(req.db, account['username'], account)
+    if (account !== null) {
+      account['subscription']['stripe_session_id'] = session.id
+      await req.accounts_db.save_account(req.db, account)
       res.redirect(session.url)
       return
 

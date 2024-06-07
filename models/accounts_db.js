@@ -47,16 +47,16 @@ exports.get_account_by_stripe_customer = function(db, stripe_customer) {
 /****************************************
 GET ACCOUNT BY STRIPE ID
 ****************************************/
-exports.get_account_by_stripe_id = function(db, stripe_object_id) {
+exports.get_account_by_stripe_session_id = function(db, stripe_object_id) {
   let accounts = db.get('accounts')
-  return accounts.findOne({'subscription.stripe_id': stripe_object_id})
+  return accounts.findOne({'subscription.stripe_session_id': stripe_object_id})
 }
 
 /****************************************
 SAVE ACCOUNT
 ****************************************/
-exports.save_account = function(db, username, account) {
+exports.save_account = function(db, account) {
   account['last_update'] = new Date()
   let accounts = db.get('accounts')
-  return accounts.update({'username': username}, account, {replaceOne: true, upsert: true})
+  return accounts.update({'username': account['username']}, account, {replaceOne: true, upsert: true})
 }
