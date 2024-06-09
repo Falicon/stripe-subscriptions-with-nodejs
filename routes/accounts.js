@@ -23,10 +23,10 @@ exports.create_account = async function(req, res) {
     if (username_taken === null) {
       // seems OK to go ahead and create this account
       const hash2 = await req.bcrypt.hash(password.trim(), 10)
-      let create_result = await req.accounts_db.create_account(req.db, real_name, username, hash2)
+      await req.accounts_db.create_account(req.db, real_name, username, hash2)
 
       // get the account record we just created
-      let account = await req.accounts_db.get_account_by_username(req.db, username)
+      const account = await req.accounts_db.get_account_by_username(req.db, username)
       if (account == null) {
         res.redirect('/sign/in')
         return
